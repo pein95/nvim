@@ -1,3 +1,4 @@
+require("keymaps")
 vim.cmd("set expandtab")
 vim.cmd("set tabstop=2")
 vim.cmd("set softtabstop=2")
@@ -27,7 +28,19 @@ local plugins = {
   },
   
 
-  {"nvim-treesitter/nvim-treesitter", build = ":TSUpdate"}
+  {"nvim-treesitter/nvim-treesitter", build = ":TSUpdate"},
+
+  {
+    "nvim-tree/nvim-tree.lua",
+    version = "*",
+    lazy = false,
+    dependencies = {
+      "nvim-tree/nvim-web-devicons",
+    },
+    config = function()
+    require("nvim-tree").setup {}
+    end,
+  }
 
     
 }
@@ -35,8 +48,6 @@ local opts = {}
 require("lazy").setup(plugins, opts)
 
 local builtin = require("telescope.builtin")
-vim.keymap.set('n', '<C-p>', builtin.find_files, {})
-vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
 
 local treesitterConfig = require("nvim-treesitter.configs")
 treesitterConfig.setup({
